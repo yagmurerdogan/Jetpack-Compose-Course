@@ -30,29 +30,27 @@ fun MainScreen() {
         color = Color.DarkGray,
         modifier = Modifier.fillMaxSize()
     ) {
-        Row(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HorizontalColoredBar(color = Color.Yellow, height = 600.dp, width = 60.dp)
-            HorizontalColoredBar(color = Color.Green, height = 600.dp, width = 60.dp)
-            HorizontalColoredBar(color = Color.Blue, height = 600.dp, width = 60.dp)
-            HorizontalColoredBar(color = Color.LightGray, height = 600.dp, width = 60.dp)
-            HorizontalColoredBar(color = Color.Black, height = 600.dp, width = 60.dp)
-
+            HorizontalColoredBar(color = Color.Yellow)
+            HorizontalColoredBar(color = Color.Green)
+            HorizontalColoredBar(color = Color.Blue)
+            HorizontalColoredBar(color = Color.LightGray)
+            HorizontalColoredBar(color = Color.Black)
         }
-
     }
 }
 
 @Composable
-fun HorizontalColoredBar(color: Color, height: Dp, width: Dp) {
+fun HorizontalColoredBar(color: Color) {
     Surface(
         color = color,
         modifier = Modifier
-            .height(height)
-            .width(width)
+            .height(100.dp)
+            .width(350.dp)
     ) { }
 }
 
