@@ -11,9 +11,14 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,15 +45,24 @@ fun GreetingText(name: String) {
         text = "Hello $name!",
         modifier = Modifier
             .size(width = 200.dp, height = 240.dp)
-            .padding(24.dp)
+            .padding(all = 24.dp)
+            //.fillMaxWidth(0.5f)
+            //.fillMaxHeight()
+            //.fillMaxSize()
             .clickable(onClick = {
                 Toast
                     .makeText(context, "Text Clicked!", Toast.LENGTH_SHORT)
                     .show()
-            })
-            //.fillMaxWidth(0.5f)
-            //.fillMaxHeight()
-            //.fillMaxSize()
+            }),
+        /*
+        style = MaterialTheme.typography.body1,
+        fontWeight = FontWeight.SemiBold
+         */
+        style = TextStyle(
+            color = Color.Yellow,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
+        )
     )
 }
 
