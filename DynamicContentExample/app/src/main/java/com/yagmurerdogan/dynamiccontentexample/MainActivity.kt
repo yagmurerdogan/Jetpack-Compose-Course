@@ -3,23 +3,27 @@ package com.yagmurerdogan.dynamiccontentexample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.yagmurerdogan.dynamiccontentexample.ui.theme.DynamicContentExampleTheme
+
+val nameList: List<String> = listOf("John","Michael","Andrew","Georgia","Danna")
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DynamicContentExampleTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+            GreetingList(names = nameList)
+        }
+    }
+}
+
+@Composable
+fun GreetingList(names: List<String>) {
+    Column {
+        for (name in names) {
+            Greeting(name = name)
         }
     }
 }
@@ -32,7 +36,5 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    DynamicContentExampleTheme {
-        Greeting("Android")
-    }
+    GreetingList(names = nameList)
 }
