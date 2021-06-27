@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -30,21 +31,24 @@ fun MainScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         Row {
-            Surface(
-                color = Color.Yellow,
-                modifier = Modifier
-                    .height(600.dp)
-                    .width(60.dp)
-            ) { }
-            Surface(
-                color = Color.LightGray,
-                modifier = Modifier
-                    .height(600.dp)
-                    .width(60.dp)
-            ) { }
+            HorizontalColoredBar(color = Color.Yellow, height = 600.dp, width = 60.dp)
+            HorizontalColoredBar(color = Color.Green, height = 600.dp, width = 60.dp)
+            HorizontalColoredBar(color = Color.Blue, height = 600.dp, width = 60.dp)
+            HorizontalColoredBar(color = Color.LightGray, height = 600.dp, width = 60.dp)
+
         }
 
     }
+}
+
+@Composable
+fun HorizontalColoredBar(color: Color, height: Dp, width: Dp) {
+    Surface(
+        color = color,
+        modifier = Modifier
+            .height(height)
+            .width(width)
+    ) { }
 }
 
 @Preview(showBackground = true)
