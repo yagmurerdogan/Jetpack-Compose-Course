@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.yagmurerdogan.simpletextcomposeapplication.ui.theme.SimpleTextComposeApplicationTheme
 
 class MainActivity : AppCompatActivity() {
@@ -27,14 +30,21 @@ class MainActivity : AppCompatActivity() {
 
          */
         setContent {
-            GreetingButton()
+            GreetingText(name = "World!")
         }
     }
 }
 
 @Composable
 fun GreetingText(name: String) {
-    Text(text = "Hello $name!")
+    Text(
+        text = "Hello $name!",
+        modifier = Modifier
+            .size(width = 80.dp, height = 240.dp)
+            //.fillMaxWidth(0.5f)
+            //.fillMaxHeight()
+            //.fillMaxSize()
+    )
 }
 
 @Composable
@@ -52,5 +62,6 @@ fun GreetingButton() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    GreetingButton()
+    GreetingText(name = "World!")
+
 }
