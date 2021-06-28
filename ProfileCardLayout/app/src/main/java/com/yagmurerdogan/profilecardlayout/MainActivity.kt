@@ -12,12 +12,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -52,10 +54,10 @@ fun UsersApplication(userProfiles: List<UserProfile> = userProfileList) {
         composable(
             route = "user_detail/{userId}",
             arguments = listOf(navArgument("userId") {
-            type = NavType.IntType
+                type = NavType.IntType
             })
         ) { navBackStackEntry ->
-            UserProfileDetailsScreen(navBackStackEntry.arguments!!.getInt("userId"))
+            UserProfileDetailsScreen(navBackStackEntry.arguments!!.getInt("userId"), navController)
         }
     }
 }
@@ -63,7 +65,14 @@ fun UsersApplication(userProfiles: List<UserProfile> = userProfileList) {
 @Composable
 fun UsersListScreen(userProfiles: List<UserProfile>, navController: NavHostController?) {
     Scaffold(
-        topBar = { AppBar() }
+        topBar = {
+            AppBar(
+                title = "Halloween Guests",
+                icon = Icons.Default.Person
+            ) {
+
+            }
+        }
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -80,16 +89,18 @@ fun UsersListScreen(userProfiles: List<UserProfile>, navController: NavHostContr
 }
 
 @Composable
-fun AppBar() {
+fun AppBar(title: String, icon: ImageVector, iconClickAction: () -> Unit) {
     TopAppBar(
         navigationIcon = {
             Icon(
-                imageVector = Icons.Default.Person,
+                imageVector = icon,
                 contentDescription = "Navigation Icon",
-                Modifier.padding(horizontal = 12.dp)
+                Modifier
+                    .padding(horizontal = 12.dp)
+                    .clickable(onClick = {iconClickAction.invoke()})
             )
         },
-        title = { Text(text = "Halloween Guests") }
+        title = { Text(text = title) }
     )
 }
 
@@ -170,10 +181,17 @@ fun ProfileContent(userName: String, onlineStatus: Boolean, alignment: Alignment
 }
 
 @Composable
-fun UserProfileDetailsScreen(userId: Int) {
-    val userProfile = userProfileList.first{userProfile -> userId == userProfile.id }
+fun UserProfileDetailsScreen(userId: Int, navController: NavHostController?) {
+    val userProfile = userProfileList.first { userProfile -> userId == userProfile.id }
     Scaffold(
-        topBar = { AppBar() }
+        topBar = {
+            AppBar(
+                title = "Guest Detail",
+                icon = Icons.Default.ArrowBack
+            ) {
+                navController?.navigateUp()
+            }
+        }
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -194,7 +212,7 @@ fun UserProfileDetailsScreen(userId: Int) {
 @Composable
 fun UserProfilesDetailsPreview() {
     MyTheme {
-        UserProfileDetailsScreen(userId = 0)
+        UserProfileDetailsScreen(userId = 0, null)
     }
 }
 
