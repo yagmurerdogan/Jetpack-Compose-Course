@@ -11,23 +11,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
-import com.yagmurerdogan.profilecardlayout.ui.theme.LightGreen
 import com.yagmurerdogan.profilecardlayout.ui.theme.MyTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,14 +29,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme() {
-                MainScreen()
+                UsersListScreen()
             }
         }
     }
 }
 
 @Composable
-fun MainScreen(userProfiles: List<UserProfile> = userProfileList) {
+fun UsersListScreen(userProfiles: List<UserProfile> = userProfileList) {
     Scaffold(
         topBar = { AppBar() }
     ) {
@@ -87,14 +81,14 @@ fun ProfileCard(userProfile: UserProfile) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            ProfilePicture(userProfile.drawableId, userProfile.status)
-            ProfileContent(userProfile.name, userProfile.status)
+            ProfilePicture(userProfile.drawableId, userProfile.status,72.dp)
+            ProfileContent(userProfile.name, userProfile.status,Alignment.Start)
         }
     }
 }
 
 @Composable
-fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
+fun ProfilePicture(drawableId: Int, onlineStatus: Boolean, imageSize: Dp) {
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -113,18 +107,18 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
                     transformations(CircleCropTransformation())
                 },
             ),
-            modifier = Modifier.size(72.dp),
+            modifier = Modifier.size(imageSize),
             contentDescription = "Profile Picture"
         )
     }
 }
 
 @Composable
-fun ProfileContent(userName: String, onlineStatus: Boolean) {
+fun ProfileContent(userName: String, onlineStatus: Boolean, alignment: Alignment.Horizontal) {
     Column(
         modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalAlignment = alignment
     ) {
         CompositionLocalProvider(
             LocalContentAlpha provides
@@ -147,10 +141,38 @@ fun ProfileContent(userName: String, onlineStatus: Boolean) {
     }
 }
 
+@Composable
+fun UserProfileDetailsScreen(userProfile: UserProfile = userProfileList[0]) {
+    Scaffold(
+        topBar = { AppBar() }
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                ProfilePicture(userProfile.drawableId, userProfile.status,240.dp)
+                ProfileContent(userProfile.name, userProfile.status,Alignment.CenterHorizontally)
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun UserProfilesDetailsPreview() {
     MyTheme {
-        MainScreen()
+        UserProfileDetailsScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UserListPreview() {
+    MyTheme {
+        UsersListScreen()
     }
 }
