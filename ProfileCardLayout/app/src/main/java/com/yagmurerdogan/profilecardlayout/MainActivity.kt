@@ -17,21 +17,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.yagmurerdogan.profilecardlayout.ui.theme.LightGreen
+import com.yagmurerdogan.profilecardlayout.ui.theme.MyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen("Android")
+            MyTheme() {
+                MainScreen()
+            }
         }
     }
 }
 
 @Composable
-fun MainScreen(name: String) {
+fun MainScreen() {
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.LightGray
+        modifier = Modifier.fillMaxSize()
     ) {
         ProfileCard()
     }
@@ -44,7 +47,8 @@ fun ProfileCard() {
             .padding(16.dp)
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top),
-        elevation = 8.dp
+        elevation = 8.dp,
+        backgroundColor = Color.White
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -61,7 +65,7 @@ fun ProfileCard() {
 fun ProfilePicture() {
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 2.dp, color = Color.Black),
+        border = BorderStroke(width = 3.dp, color = LightGreen),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
@@ -99,5 +103,7 @@ fun ProfileContent() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScreen("Android")
+    MyTheme {
+        MainScreen()
+    }
 }
