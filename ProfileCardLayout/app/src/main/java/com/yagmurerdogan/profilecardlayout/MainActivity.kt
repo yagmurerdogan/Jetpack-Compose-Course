@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     Scaffold(
-        topBar = {AppBar()}
+        topBar = { AppBar() }
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -49,12 +49,14 @@ fun MainScreen() {
 @Composable
 fun AppBar() {
     TopAppBar(
-        navigationIcon = { Icon(
-            imageVector = Icons.Default.Home,
-            contentDescription = "Navigation Icon",
-            Modifier.padding(horizontal = 12.dp)
-        )},
-        title = { Text(text = "Messaging Application Users")}
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Default.Home,
+                contentDescription = "Navigation Icon",
+                Modifier.padding(horizontal = 12.dp)
+            )
+        },
+        title = { Text(text = "Messaging Application Users") }
     )
 }
 
