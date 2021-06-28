@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userProfiles: List<UserProfile> = userProfileList) {
     Scaffold(
         topBar = { AppBar() }
     ) {
@@ -45,8 +45,9 @@ fun MainScreen() {
             modifier = Modifier.fillMaxSize()
         ) {
             Column {
-                ProfileCard()
-                ProfileCard()
+                for (user in userProfiles) {
+                    ProfileCard(user)
+                }
             }
         }
     }
@@ -67,7 +68,7 @@ fun AppBar() {
 }
 
 @Composable
-fun ProfileCard() {
+fun ProfileCard(userProfile: UserProfile) {
     Card(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
@@ -81,23 +82,28 @@ fun ProfileCard() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            ProfilePicture()
-            ProfileContent()
+            ProfilePicture(userProfile.drawableId, userProfile.status)
+            ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-fun ProfilePicture() {
+fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 3.dp, color = Color.Yellow),
+        border = BorderStroke(
+            width = 3.dp,
+            color = if (onlineStatus)
+                Color.Yellow
+            else Color.Black
+        ),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
         Image(
             painter = painterResource(
-                id = R.drawable.dracula
+                id = drawableId
             ),
             contentDescription = "Profile image",
             modifier = Modifier.size(72.dp),
@@ -107,19 +113,27 @@ fun ProfilePicture() {
 }
 
 @Composable
-fun ProfileContent() {
+fun ProfileContent(userName: String, onlineStatus: Boolean) {
     Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = "Dracula",
-            style = MaterialTheme.typography.h5
-        )
+        CompositionLocalProvider(
+            LocalContentAlpha provides
+                    if (onlineStatus)
+                        1f else ContentAlpha.medium
+        ) {
+            Text(
+                text = userName,
+                style = MaterialTheme.typography.h5
+            )
+        }
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) { //for transparency
             Text(
-                text = "Active now",
+                text = if (onlineStatus)
+                    "Active now"
+                else "Offline",
                 style = MaterialTheme.typography.body2
             )
         }
