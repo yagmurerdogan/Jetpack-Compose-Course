@@ -8,6 +8,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -33,11 +35,27 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize()
+    Scaffold(
+        topBar = {AppBar()}
     ) {
-        ProfileCard()
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            ProfileCard()
+        }
     }
+}
+
+@Composable
+fun AppBar() {
+    TopAppBar(
+        navigationIcon = { Icon(
+            imageVector = Icons.Default.Home,
+            contentDescription = "Navigation Icon",
+            Modifier.padding(horizontal = 12.dp)
+        )},
+        title = { Text(text = "Messaging Application Users")}
+    )
 }
 
 @Composable
