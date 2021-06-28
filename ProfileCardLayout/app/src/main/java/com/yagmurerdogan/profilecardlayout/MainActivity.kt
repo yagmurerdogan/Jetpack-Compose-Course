@@ -22,8 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
@@ -43,12 +45,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UsersApplication(userProfiles: List<UserProfile> = userProfileList) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "user_list") {
+    NavHost(navController = navController, startDestination = "users_list") {
         composable("users_list") {
             UsersListScreen(userProfiles, navController)
         }
-        composable("user_detail") {
-            UserProfileDetailsScreen()
+        composable(
+            route = "user_detail/{userId}",
+            arguments = listOf(navArgument("userId") {
+            type = NavType.IntType
+            })
+        ) { navBackStackEntry ->
+            UserProfileDetailsScreen(navBackStackEntry.arguments!!.getInt("userId"))
         }
     }
 }
@@ -64,7 +71,7 @@ fun UsersListScreen(userProfiles: List<UserProfile>, navController: NavHostContr
             LazyColumn {
                 items(userProfiles) { userProfile ->
                     ProfileCard(userProfile = userProfile) {
-                        navController?.navigate("user_details")
+                        navController?.navigate("user_detail/${userProfile.id}")
                     }
                 }
             }
@@ -163,7 +170,8 @@ fun ProfileContent(userName: String, onlineStatus: Boolean, alignment: Alignment
 }
 
 @Composable
-fun UserProfileDetailsScreen(userProfile: UserProfile = userProfileList[0]) {
+fun UserProfileDetailsScreen(userId: Int) {
+    val userProfile = userProfileList.first{userProfile -> userId == userProfile.id }
     Scaffold(
         topBar = { AppBar() }
     ) {
@@ -186,7 +194,7 @@ fun UserProfileDetailsScreen(userProfile: UserProfile = userProfileList[0]) {
 @Composable
 fun UserProfilesDetailsPreview() {
     MyTheme {
-        UserProfileDetailsScreen()
+        UserProfileDetailsScreen(userId = 0)
     }
 }
 
