@@ -10,6 +10,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -41,7 +44,10 @@ fun MainScreen() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            ProfileCard()
+            Column {
+                ProfileCard()
+                ProfileCard()
+            }
         }
     }
 }
@@ -51,12 +57,12 @@ fun AppBar() {
     TopAppBar(
         navigationIcon = {
             Icon(
-                imageVector = Icons.Default.Home,
+                imageVector = Icons.Default.Person,
                 contentDescription = "Navigation Icon",
                 Modifier.padding(horizontal = 12.dp)
             )
         },
-        title = { Text(text = "Messaging Application Users") }
+        title = { Text(text = "Halloween Guests") }
     )
 }
 
@@ -64,7 +70,7 @@ fun AppBar() {
 fun ProfileCard() {
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top),
         elevation = 8.dp,
@@ -85,7 +91,7 @@ fun ProfileCard() {
 fun ProfilePicture() {
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 3.dp, color = LightGreen),
+        border = BorderStroke(width = 3.dp, color = Color.Yellow),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
