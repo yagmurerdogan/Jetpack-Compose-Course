@@ -40,6 +40,12 @@ package com.yagmurerdogan.mealzapp
     preparing and managing the state of the UI for
     Fragments or Activities, or composable.
 
+
+
+    --- Gson and JSON are not same ---
+
+    Gson deserialization:
+    JSON -> data classes
     
 
 
